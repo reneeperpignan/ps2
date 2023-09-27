@@ -128,29 +128,24 @@ class BinarySearchTree:
        11 
     '''
     def rotate(self, direction, child_side):
-        # Your code goes here
-        #split into two categories, when the child subtree is on L side, and when its on R side 
         if child_side == 'L' and self.left is not None: 
-            # split into directions, L and R 
             if direction == 'L':
-                # assign the variables to their subtrees from the original tree before rotation  
+                # assign the variables that we will perform the rotation on! 
                 x = self.left
                 y = self.left.right
                 A = self.left.left
                 B = self.left.right.left
                 C = self.left.right.right 
-                # reassign the tree values to reflect the change in the position of y, x, and B 
+                # perform the rotation by changing the pointers
                 self.left = y 
                 self.left.left = x 
                 self.left.left.right = B 
-                # size of y and x have changed -- reassign the size of y and x: 
-                # size of y (self.left.size) is now equal to the old size of x  
+                # now we must adjust for the size of x and y because they have changed in the rotation
+                # set the size of y to be the original size of x
                 self.left.size = x.size 
-                # check if A and B are empty subtrees 
+                # account for the size of x now (it has children A and B)
                 if A is not None and B is not None:
-                    # size of x (self.left.left.size) is equal to the size of it's subtrees + 1  
                     self.left.left.size = A.size + B.size + 1
-                # check all of the other cases when one is an empty subtree and the other isnt
                 elif A is not None: 
                     self.left.left.size = A.size + 1
                 elif B is not None: 
@@ -159,25 +154,22 @@ class BinarySearchTree:
                     self.left.left.size = 1
                 return self
 
+            #now do the same to the other side -- but now the direction is right!
             if direction == 'R': 
-                # assign the variables to their subtrees from the original tree before rotation
                 x = self.left.left
                 y = self.left
                 A = self.left.left.left
                 B = self.left.left.right
                 C = self.left.right
-                # reassign the tree values to reflect the change in the position of y, x, and B
+
                 self.left = x 
                 self.left.right = y 
                 self.left.right.left = B 
-                # size of y and x have changed -- reassign the size of y and x: 
-                # size of x (self.left.size) is now equal to the old size of y
+    
+                # accounting for sizes here!
                 self.left.size = y.size
-                # check if B and C are empty subtrees 
                 if B is not None and C is not None:
-                    # size of y (self.left.right.size) is equal to the size of it's subtrees + 1 
                     self.left.right.size = B.size + C.size + 1
-                # check all of the other cases when one is an empty subtree and the other isnt
                 elif B is not None:
                     self.left.right.size = B.size + 1
                 elif C is not None:
@@ -187,26 +179,21 @@ class BinarySearchTree:
 
                 return self
 
+        #now, we account for when the child side is right
         if child_side == 'R' and self.right is not None:
             if direction == 'L':
-                # assign the variables to their subtrees from the original tree before rotation
                 x = self.right 
                 y = self.right.right 
                 A = self.right.left  
                 B = self.right.right.left 
                 C = self.right.right.right
-                # reassign the tree values to reflect the change in the position of y, x, and B 
                 self.right = y 
                 self.right.left = x 
                 self.right.left.right = B 
-                # size of y and x have changed -- reassign the size of y and x: 
-                # size of y (self.right.size) is now equal to the old size of x
+                # account for sizes
                 self.right.size = x.size
-                # check if A and B are empty subtrees 
                 if A is not None and B is not None: 
-                    # size of x (self.right.left.size) is equal to the size of it's subtrees + 1
                     self.right.left.size = A.size + B.size + 1
-                # check all of the other cases when one is an empty subtree and the other isnt
                 elif A is not None: 
                     self.right.left.size = A.size + 1
                 elif B is not None: 
@@ -215,25 +202,20 @@ class BinarySearchTree:
                     self.right.left.size = 1
                 return self 
 
+            # now do the same for right direction
             if direction == 'R':
-                # assign the variables to their subtrees from the original tree before rotation
                 y = self.right 
                 x = self.right.left 
                 A = self.right.left.left 
                 B = self.right.left.right  
                 C = self.right.right
-                # reassign the tree values to reflect the change in the position of y, x, and B  
                 self.right = x 
                 self.right.right = y 
                 self.right.right.left = B 
-                # size of y and x have changed -- reassign the size of y and x: 
-                # size of x (self.right.size) is now equal to the old size of y
+                # change the size
                 self.right.size = y.size
-                # check if B and C are empty subtrees
                 if B is not None and C is not None:
-                    # size of y (self.right.right.size) is equal to the size of it's subtrees + 1
                     self.right.right.size = B.size + C.size + 1
-                # check all of the other cases when one is an empty subtree and the other isnt 
                 elif B is not None: 
                     self.right.right.size = B.size + 1
                 elif C is not None: 
